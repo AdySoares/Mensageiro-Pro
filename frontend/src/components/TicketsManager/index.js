@@ -8,7 +8,8 @@ import {
   Paper,
   Tab,
   Tabs,
-  Switch
+  Switch,
+  Checkbox
 } from "@material-ui/core";
 
 import {
@@ -120,6 +121,8 @@ const TicketsManager = () => {
   const userQueueIds = user.queues.map((q) => q.id);
   const [selectedQueueIds, setSelectedQueueIds] = useState(userQueueIds || []);
 
+  const [reorder, setReorder] = useState(false)
+
   useEffect(() => {
     if (user.profile.toUpperCase() === "ADMIN") {
       setShowAllTickets(true);
@@ -154,7 +157,6 @@ const TicketsManager = () => {
       return { width: 0, height: 0 };
     }
   };
-  
 
   return (
     <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
@@ -229,6 +231,16 @@ const TicketsManager = () => {
         >
           {i18n.t("ticketsManager.buttons.newTicket")}
         </Button>
+
+
+        <>
+            <FormControlLabel
+            control={<Checkbox onChange={() => {
+              setReorder((prevState) => !prevState)
+            }} name="checkedA" />}
+            label="Mais Antigos"/>
+        </>
+
         <Can
           role={user.profile}
           perform="tickets-manager:showall"
@@ -260,6 +272,12 @@ const TicketsManager = () => {
       <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
       <TagsFilter onFiltered={handleSelectedTags} />
         <Paper className={classes.ticketsWrapper}>
+        <TicketsList
+            status="pending"
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setPendingCount(val)}
+            style={applyPanelStyle("pending")}
+          />
           <TicketsList
             status="open"
             showAll={showAllTickets}
@@ -267,18 +285,14 @@ const TicketsManager = () => {
             updateCount={(val) => setOpenCount(val)}
             style={applyPanelStyle("open")}
           />
-          <TicketsList
-            status="pending"
-            selectedQueueIds={selectedQueueIds}
-            updateCount={(val) => setPendingCount(val)}
-            style={applyPanelStyle("pending")}
-          />
+         
         </Paper>
       </TabPanel>
 
       <TabPanel value={tab} name="pending" className={classes.ticketsWrapper}>
       <TagsFilter onFiltered={handleSelectedTags} />
         <TicketsList
+          reorder={reorder}
           status="pending"
           showAll={true}
           selectedQueueIds={selectedQueueIds}

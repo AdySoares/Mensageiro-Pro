@@ -170,6 +170,7 @@ const TicketsList = (props) => {
 		updateCount,
 		style,
 		tags,
+		reorder,
 	} = props;
 	const classes = useStyles();
 	const [pageNumber, setPageNumber] = useState(1);
@@ -181,7 +182,7 @@ const TicketsList = (props) => {
 	useEffect(() => {
 		dispatch({ type: "RESET" });
 		setPageNumber(1);
-	}, [status, searchParam, dispatch, showAll, selectedQueueIds, tags]);
+	}, [status, searchParam, dispatch, showAll, selectedQueueIds, tags,]);
 
 	const { tickets, hasMore, loading } = useTickets({
 		pageNumber,
@@ -231,8 +232,10 @@ const TicketsList = (props) => {
 				dispatch({ type: "LOAD_TICKETS", payload: tickets });
 			}
 		}
+
+
 		// eslint-disable-next-line
-	}, [tickets, status, searchParam, queues, profile]);
+	}, [tickets, status, searchParam, queues, profile,]);
 
 	useEffect(() => {
 		const socket = openSocket();
@@ -317,10 +320,61 @@ const TicketsList = (props) => {
 
 		if (scrollHeight - (scrollTop + 100) < clientHeight) {
 			loadMore();
-		}
-	};
+		} 
+	};	
 
-	console.log(ticketsList)
+	function sortListTicket(){
+		if(ticketsList.length > 0){
+			if(ticketsList[0].status === 'pending'){
+				let reorderList = [...ticketsList]
+				if(reorder === true){
+					reorderList.sort((a,b) => {
+						const dateA = new Date(a.createdAt)
+						const dateB = new Date(b.createdAt)
+						return (dateA - dateB)
+					})
+
+					return (
+						<>
+							{
+								reorderList.map((ticket) => {
+									return (<TicketListItem ticket={ticket} key={ticket.id}/>)
+								})
+							}
+						</>
+					)
+				} else{
+					console.log(props)
+					reorderList.sort((a,b) => {
+						const dateA = new Date(a.updatedAt)
+						const dateB = new Date(b.updatedAt)
+						return (dateB - dateA)
+					})
+
+					return(
+						<>
+							{
+								reorderList.map((ticket) => (
+									<TicketListItem ticket={ticket} key={ticket.id} />
+								))
+							}
+						</>
+					)
+				}
+
+			} else{
+					return(
+						<>
+							{
+								ticketsList.map((ticket) => (
+									<TicketListItem ticket={ticket} key={ticket.id} />
+								))
+							}
+						</>
+					)
+				}
+			}
+	}
 
 	return (
 		<Paper className={classes.ticketsListWrapper} style={style}>
@@ -343,9 +397,7 @@ const TicketsList = (props) => {
 						</div>
 					) : (
 						<>
-							{ticketsList.map((ticket) => (
-								<TicketListItem ticket={ticket} key={ticket.id} />
-							))}
+							{sortListTicket()}
 						</>
 					)}
 					{loading && <TicketsListSkeleton />}

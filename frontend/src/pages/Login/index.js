@@ -27,7 +27,7 @@ const Copyright = () => {
     <Typography variant="body2" color="textSecondary" align="center">
       © {new Date().getFullYear()}
       {" - "}
-      <Link color="inherit" href={system.url || "https://github.com/rtenorioh/Press-Ticket"}>
+      <Link color="inherit" href={system.url}>
         {system.name}
       </Link>
       {"."}
@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  logo: {
+    maxWidth: '100%',
+    background: 'cover',
+    marginBottom: '50px'
+  }
 }));
 
 const Login = () => {
@@ -72,7 +77,7 @@ const Login = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <img alt="logo" src={logo}></img>
+        <img alt="logo" src={logo} className={classes.logo}></img>
         <Typography component="h1" variant="h5">
           {i18n.t("login.title")}
         </Typography>

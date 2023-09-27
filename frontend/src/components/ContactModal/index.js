@@ -33,6 +33,7 @@ import toastError from "../../errors/toastError";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/Auth/AuthContext";
+import { TagsContainer } from "../TagsContainer";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -196,6 +197,9 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 										margin="dense"
 										variant="outlined"
 									/>
+								</div>
+								<div>
+									<TagsContainer contact={contact} className={classes.contactTags} />
 								</div>
 								<Typography
 									style={{ marginBottom: 8, marginTop: 12 }}

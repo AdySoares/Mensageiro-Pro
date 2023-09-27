@@ -121,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     opacity: 0.2,
     fontSize: 12
+  },
+  LogoDash: {
+    maxWidth: '80%',
+    background: 'cover'
   }
 }));
 
@@ -206,7 +210,7 @@ const LoggedInLayout = ({ children }) => {
         open={drawerOpen}
       >
         <div className={classes.toolbarIcon}>
-          <img src={logodash} alt="logo" />
+          <img src={logodash} alt="logo" className={classes.LogoDash}/>
           <IconButton color="secondary" onClick={() => setDrawerOpen(!drawerOpen)}>
             <ChevronLeftIcon />
           </IconButton>
@@ -247,7 +251,7 @@ const LoggedInLayout = ({ children }) => {
             noWrap
             className={classes.title}
           >
-            {i18n.t("mainDrawer.appBar.message.hi")} {user.name}, {i18n.t("mainDrawer.appBar.message.text")} {system.name || "Multiconversa"}
+            {i18n.t("mainDrawer.appBar.message.hi")} {user.name}, {i18n.t("mainDrawer.appBar.message.text")} {system.name || "Mensageiro Pro"}
           </Typography>
           {user.id && <NotificationsPopOver />}
 
@@ -284,7 +288,7 @@ const LoggedInLayout = ({ children }) => {
               </MenuItem>
               <Divider />
               <span className={classes.systemCss}>
-                <Link color="inherit" href={system.url || "https://github.com/rtenorioh/Press-Ticket"}>
+                <Link color="inherit" href={system.url}>
                   v{systemVersion}
                 </Link>
               </span>

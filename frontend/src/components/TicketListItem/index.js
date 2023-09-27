@@ -313,7 +313,7 @@ const TicketListItem = ({ ticket, userId }) => {
 				dense
 				button
 				onClick={e => {
-					if (ticket.status === "pending") return;
+					// if (ticket.status === "pending") return;
 					handleSelectTicket(ticket.id);
 				}}
 				selected={ticketId && +ticketId === ticket.id}
@@ -510,16 +510,7 @@ const TicketListItem = ({ ticket, userId }) => {
 					</Tooltip>
 				)}
 
-				{ticket.status === "pending" && (
-					<Tooltip title={i18n.t("ticketsList.items.spy")}>
-						<IconButton
-							className={classes.bottomButton}
-							color="primary"
-							onClick={e => handleViewTicket(ticket.id)} >
-							<Visibility />
-						</IconButton>
-					</Tooltip>
-				)}
+
 
 				{ticket.status === "pending" && (
 					<Tooltip title={i18n.t("ticketsList.items.close")}>
@@ -576,3 +567,15 @@ const TicketListItem = ({ ticket, userId }) => {
 };
 
 export default TicketListItem;
+
+
+// {ticket.status === "pending" && (
+// 	<Tooltip title={i18n.t("ticketsList.items.spy")}>
+// 		<IconButton
+// 			className={classes.bottomButton}
+// 			color="primary"
+// 			onClick={e => handleViewTicket(ticket.id)} >
+// 			<Visibility />
+// 		</IconButton>
+// 	</Tooltip>
+// )}
