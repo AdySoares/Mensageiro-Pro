@@ -6,7 +6,7 @@ module.exports = {
       "Users",
       [
         {
-          name: "Press-Ticket",
+          name: "Usuário",
           email: "admin@admin.com.br",
           passwordHash:
             "$2a$12$0DfqJ7RHK6/DwHFAiDf0PONa7YinuWS9XL9C8oFno0WZTPLMrlUn.",
